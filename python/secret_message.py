@@ -1,4 +1,5 @@
 from tkinter import messagebox, simpledialog, Tk
+from random import choice
 
 def get_task():
     task = simpledialog.askstring('Task', 'Do you want to encrypt or decrypt?')
@@ -11,33 +12,33 @@ def get_message():
 def is_even(number):
     return number % 2 == 0
 
-def get_even_letters(massage):
+def get_even_letters(message):
     even_letters = []
-    for counter in range(0, len(massage)):
+    for counter in range(0, len(message)):
         if is_even(counter):
-            even_letters.append(massage[counter])
+            even_letters.append(message[counter])
     return even_letters
 
-def get_odd_letters(massage):
+def get_odd_letters(message):
     odd_letters = []
-    for counter in range(0, len(massage)):
+    for counter in range(0, len(message)):
         if not is_even(counter):
-            odd_letters.append(massage[counter])
+            odd_letters.append(message[counter])
     return odd_letters
 
-def swap_letters(message):
-    letter_list = []
-    if not is_even(len(message)):
-        message2 = message + 'x'
-    else:
-        message2 = message
-    even_letters = get_even_letters(message2)
-    odd_letters = get_odd_letters(message2)
-    for counter in range(0, int(len(message2) / 2)):
-        letter_list.append(odd_letters[counter])
-        letter_list.append(even_letters[counter])
-    new_massage = ''.join(letter_list)
-    return new_massage
+def encrypt(message):
+    encrypted_list = []
+    fake_letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i', 'r', 's', 'u', 'v']
+    for counter in range(0, len(message)):
+        encrypted_list.append(message[counter])
+        encrypted_list.append(choice(fake_letters))
+    new_message = ''.join(encrypted_list)
+    return new_message
+
+def decrypt(message):
+    even_letters = get_even_letters(message)
+    new_message = ''.join(even_letters)
+    return new_message
 
 root = Tk()
 
@@ -45,11 +46,11 @@ while True:
     task = get_task()
     if task == 'encrypt':
         message = get_message()
-        encrypted = swap_letters(message)
+        encrypted = encrypt(message)
         messagebox.showinfo('Cipheitext of the secret massage is:', encrypted)
     elif task == 'decrypt':
         message = get_message()
-        decrypted = swap_letters(message)
+        decrypted = decrypt(message)
         messagebox.showinfo('Plaintext of the secret massage is:', decrypted)
     else:
         break
