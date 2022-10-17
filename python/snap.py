@@ -39,8 +39,8 @@ c.pack()
 random.shuffle(shapes)
 
 shape = None
-previous_color = ''
-current_color = ''
+previous_color = 'a'
+current_color = 'b'
 player1_score = 0
 player2_score = 0
 
@@ -70,6 +70,7 @@ def snap(event):
     global shape
     global player1_score
     global player2_score
+    global previous_color
     valid = False
     c.delete(shape)
     if previous_color == current_color:
@@ -77,15 +78,18 @@ def snap(event):
     if valid:
         if event.char == 'q':
             player1_score += 1
+            shape = c.create_text(200, 200, text='SNAP! Player1 scored 1 point!')
         else:
             player2_score += 1
-        shape = c.create_text(200, 200, text='SNAP! You scored 1 point!')
+            shape = c.create_text(200, 200, text='SNAP! Player2 scored 1 point!')
+        previous_color = ''
     else:
         if event.char == 'q':
             player1_score -= 1
+            shape = c.create_text(200, 200, text='WRONG! Player1 lose 1 point!')
         else:
             player2_score -= 1
-        shape = c.create_text(200, 200, text='WRONG! You lose 1 point!')
+            shape = c.create_text(200, 200, text='WRONG! Player2 lose 1 point!')
     c.pack()
     root.update_idletasks()
     time.sleep(1)
