@@ -28,10 +28,24 @@ score_turtle.hideturtle()
 score_turtle.speed(0)
 
 def outside_window():
-    pass
+    left_wall = -t.window_width() / 2
+    right_wall = -left_wall
+    top_wall = t.window_height() / 2
+    bottom_wall = -top_wall
+    (x, y) = caterpillar.pos()
+    outside = \
+        x < left_wall or\
+        x > right_wall or\
+        y < bottom_wall or\
+        y > top_wall
+    return outside
 
 def game_over():
-    pass
+    caterpillar.color('yellow')
+    leaf.color('yellow')
+    t.penup()
+    t.hideturtle()
+    t.write('GAME OVER!', align='center', font=('Arial', 30,'normal'))
 
 def display_score(current_score):
     pass
@@ -63,3 +77,7 @@ def start_game():
         if outside_window():
             game_over()
             break
+
+t.onkey(start_game, 'space')
+t.listen()
+t.mainloop()
